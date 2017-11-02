@@ -40,7 +40,7 @@ $ flask run
 
 ### Project Timeline
 
-See [Milestones](/milestones).
+See [Milestones](https://github.com/alchermd/client_payroll/milestones).
 
 ### License
 
