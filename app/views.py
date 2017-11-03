@@ -16,12 +16,25 @@ def login_required(f):
     return decorated_function
 
 
+# Looks awfully the same as login_required.
+# TODO: DRY this up!
+def logout_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("ADMIN"):
+            flash("You are currently logged in.", "info")
+            return redirect(url_for('dashboard'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route("/")
 def index():
     return redirect(url_for("login"))
 
 
 @app.route("/login", methods=["GET", "POST"])
+@logout_required
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -41,4 +54,4 @@ def login():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    return "welcome to dashboard!"
+    return render_template("dashboard.html")
