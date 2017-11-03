@@ -11,5 +11,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # Expose some parts of the application to be easily imported.
+from .cli import create_super_user
 from .models import db
 from . import views
