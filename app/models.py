@@ -48,6 +48,7 @@ class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     employer_id = db.Column(db.Integer, db.ForeignKey('employers.id'))
     employee_id = db.Column(db.Integer, db.ForeignKey('employees.id'))
+    amount = db.Column(db.Integer, nullable=False)
     payment_date = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __str__(self):
