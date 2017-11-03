@@ -2,7 +2,27 @@
 
 This application provides a system for the client to manage the payroll of their employees.
 
-## Installation
+## Setup
+
+
+### Configuration
+
+The application expects the file `instance/app.cfg` to load configuration variables from.
+
+```py
+# instance/app.cfg
+
+# Change this on production!
+SECRET_KEY = "secretdevkey" 
+
+# See http://flask-sqlalchemy.pocoo.org/2.3/config/#connection-uri-format for reference.
+SQLALCHEMY_DATABASE_URI = "dialect+driver://username:password@host:port/database" 
+
+# To silence *that* error.
+SQLALCHEMY_TRACK_MODIFICATIONS = 0
+```
+
+### Installation
 
 ```bash
 $ pip install -r requirements.txt
@@ -14,6 +34,7 @@ $ flask run
 * Forcing debug mode on
 * Running on http://127.0.0.1:5000/
 ```
+
 
 ## Project Specification
 
