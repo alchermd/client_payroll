@@ -27,7 +27,7 @@ def login():
     if form.validate_on_submit():
         admin = Admin.query.filter_by(username=form.username.data).first()
 
-        if pbkdf2_sha256.verify(form.password.data, admin.password):
+        if admin is not None and pbkdf2_sha256.verify(form.password.data, admin.password):
             session["ADMIN"] = admin.username
             return redirect(url_for("dashboard"))
 
