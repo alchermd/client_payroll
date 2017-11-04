@@ -72,3 +72,26 @@ def dashboard():
     payments = Payment.query.all()
 
     return render_template("dashboard.html", payments=payments)
+
+
+@app.route("/dashboard/payments/<int:payment_id>")
+@login_required
+def payment_permalink(payment_id):
+    payment = Payment.query.filter_by(id=payment_id).first()
+    if payment is None:
+        flash("No such entry found.", "warning")
+        return redirect(url_for("dashboard"))
+
+    return render_template("payment_permalink.html", payment=payment)
+
+
+@app.route("/dashboard/employers/<int:employer_id>")
+@login_required
+def employer_permalink(employer_id):
+    pass
+
+
+@app.route("/dashboard/employees/<int:employee_id>")
+@login_required
+def employee_permalink(employee_id):
+    pass
