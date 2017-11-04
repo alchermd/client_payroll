@@ -84,8 +84,8 @@
                         {% for payment in payments %}
                         <tr>
                             <td>{{ payment.id }}</td>
-                            <td>{{ payment.employer_name }}</td>
-                            <td>{{ payment.employee_name }}</td>
+                            <td>{{ payment.employer.name }}</td>
+                            <td>{{ payment.employee.name }}</td>
                             <td>{{ payment.amount }}</td>
                             <td>{{ payment.payment_date }}</td>
                         </tr>

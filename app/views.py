@@ -64,9 +64,5 @@ def logout():
 @login_required
 def dashboard():
     payments = Payment.query.all()
-    # TODO: Find a 'cleaner' way to fetch the payments.
-    for payment in payments:
-        payment.employee_name = Employee.query.filter_by(id=payment.employee_id).first().name
-        payment.employer_name = Employer.query.filter_by(id=payment.employer_id).first().name
 
     return render_template("dashboard.html", payments=payments)
