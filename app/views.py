@@ -97,6 +97,21 @@ def payment_permalink(payment_id):
     return render_template("payment_permalink.html", payment=payment, form=form)
 
 
+@app.route("/dashboard/payments/<int:payment_id>/delete")
+@login_required
+def delete_payment(payment_id):
+    payment = Payment.query.filter_by(id=payment_id).first()
+    if payment is None:
+        flash("No such entry found.", "warning")
+        return redirect(url_for("dashboard"))
+
+    db.session.delete(payment)
+    db.session.commit()
+
+    flash("Payment deleted", "danger")
+    return redirect(url_for("dashboard"))
+
+
 @app.route("/dashboard/employers/<int:employer_id>")
 @login_required
 def employer_permalink(employer_id):
