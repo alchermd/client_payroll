@@ -28,6 +28,12 @@ def logout_required(f):
     return decorated_function
 
 
+@app.template_filter("time_format")
+def time_format(timestamp):
+    """ Format a timestamp as 'Month Day, Year - HourPM' """
+    return timestamp.strftime("%b %d, %Y - %I%p")
+
+
 @app.route("/")
 def index():
     return redirect(url_for("login"))

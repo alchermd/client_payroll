@@ -87,7 +87,7 @@
                             <td>{{ payment.employer.name }}</td>
                             <td>{{ payment.employee.name }}</td>
                             <td>{{ payment.amount }}</td>
-                            <td>{{ payment.payment_date }}</td>
+                            <td>{{ payment.payment_date | time_format }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
