@@ -51,6 +51,15 @@ def login():
     return render_template("login.html", form=form)
 
 
+@app.route("/logout")
+@login_required
+def logout():
+    session.pop("ADMIN", None)
+    flash("You are now logged out.", "primary")
+    
+    return redirect(url_for("login"))
+
+
 @app.route("/dashboard")
 @login_required
 def dashboard():
