@@ -1,5 +1,5 @@
-from . import app
-from .forms import LoginForm
+from . import app, db
+from .forms import LoginForm, UpdatePaymentForm
 from .models import Admin, Employee, Employer, Payment
 from flask import flash, redirect, render_template, session, url_for
 from functools import wraps
@@ -74,7 +74,7 @@ def dashboard():
     return render_template("dashboard.html", payments=payments)
 
 
-@app.route("/dashboard/payments/<int:payment_id>")
+@app.route("/dashboard/payments/<int:payment_id>", methods=["GET", "POST"])
 @login_required
 def payment_permalink(payment_id):
     payment = Payment.query.filter_by(id=payment_id).first()
@@ -82,7 +82,19 @@ def payment_permalink(payment_id):
         flash("No such entry found.", "warning")
         return redirect(url_for("dashboard"))
 
-    return render_template("payment_permalink.html", payment=payment)
+    form = UpdatePaymentForm()    
+    if form.validate_on_submit():
+        payment.employer_id = form.employer.data
+        payment.employee_id = form.employee.data
+        payment.amount = form.amount.data
+
+        db.session.add(payment)
+        db.session.commit()
+
+        flash("Payment updated.", "success")
+        return redirect(url_for("dashboard"))
+
+    return render_template("payment_permalink.html", payment=payment, form=form)
 
 
 @app.route("/dashboard/employers/<int:employer_id>")
