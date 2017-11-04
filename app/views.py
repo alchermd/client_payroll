@@ -1,6 +1,6 @@
 from . import app
 from .forms import LoginForm
-from .models import Admin
+from .models import Admin, Employee, Employer, Payment
 from flask import flash, redirect, render_template, session, url_for
 from functools import wraps
 from passlib.hash import pbkdf2_sha256
@@ -56,11 +56,17 @@ def login():
 def logout():
     session.pop("ADMIN", None)
     flash("You are now logged out.", "primary")
-    
+
     return redirect(url_for("login"))
 
 
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    payments = Payment.query.all()
+    # TODO: Find a 'cleaner' way to fetch the payments.
+    for payment in payments:
+        payment.employee_name = Employee.query.filter_by(id=payment.employee_id).first().name
+        payment.employer_name = Employer.query.filter_by(id=payment.employer_id).first().name
+
+    return render_template("dashboard.html", payments=payments)

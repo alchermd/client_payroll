@@ -81,27 +81,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for payment in payments %}
                         <tr>
-                            <td>1</td>
-                            <td>Jane Doe</td>
-                            <td>Robert Foo</td>
-                            <td>300</td>
-                            <td>June 05, 2017</td>
+                            <td>{{ payment.id }}</td>
+                            <td>{{ payment.employer_name }}</td>
+                            <td>{{ payment.employee_name }}</td>
+                            <td>{{ payment.amount }}</td>
+                            <td>{{ payment.payment_date }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Deborah Fox</td>
-                            <td>John Smith</td>
-                            <td>450</td>
-                            <td>June 25, 2017</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Jane Doe</td>
-                            <td>Aaron Smith</td>
-                            <td>1000</td>
-                            <td>August 29, 2017</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
