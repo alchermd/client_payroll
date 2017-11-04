@@ -48,6 +48,7 @@
         </nav>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1>Dashboard</h1>
+            {% include "includes/flashed_messages.html" %}
             <section class="row text-center placeholders">
                 <div class="col-12 col-sm-4 placeholder">
                     <img src="{{ url_for('static', filename='image/placeholder_blue.gif') }}" width="200" height="200" class="img-fluid rounded-circle"
@@ -68,6 +69,7 @@
                     <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, ipsam.</p>
                 </div>
             </section>
+
             <h2>Payments Made</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
