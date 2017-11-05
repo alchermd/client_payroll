@@ -23,6 +23,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Date Employed</th>
+                            <th>Total Salary</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,7 @@
                             <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.id }}</a></td>
                             <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.name }}</a></td>
                             <td>{{ employee.date_employed | time_format }}</td>
+                            <td>{{ employee.total_salary }}</td>
                         </tr>
                     </tbody>
                 </table>
