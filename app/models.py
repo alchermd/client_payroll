@@ -37,6 +37,7 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     date_employed = db.Column(db.DateTime, default=datetime.datetime.now())
+    total_salary = db.Column(db.Integer, default=0)
     payment = db.relationship('Payment',
                               backref=db.backref('employee', lazy=True),
                               cascade="save-update, merge, delete")
