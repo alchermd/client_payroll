@@ -1,5 +1,5 @@
 from . import app, db
-from .forms import EmployerForm, LoginForm, PaymentForm
+from .forms import EmployeeForm, EmployerForm, LoginForm, PaymentForm
 from .models import Admin, Employee, Employer, Payment
 from flask import flash, redirect, render_template, session, url_for
 from functools import wraps
@@ -187,12 +187,20 @@ def delete_employer(employer_id):
     return redirect(url_for("employers"))
 
 
-@app.route("/dashboard/employees/")
+@app.route("/dashboard/employees/", methods=["GET", "POST"])
 @login_required
 def employees():
     employees = Employee.query.all()
+    form = EmployeeForm()
+    if form.validate_on_submit():
+        new_employee = Employee(name=form.name.data, date_employed=form.date_employed.data)
+        db.session.add(new_employee)
+        db.session.commit()
 
-    return render_template("employees.html", employees=employees)
+        flash("Employee created.", "success")
+        return redirect(url_for("employees"))
+
+    return render_template("employees.html", employees=employees, form=form)
 
 
 @app.route("/dashboard/employees/<int:employee_id>")
