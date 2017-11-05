@@ -71,7 +71,11 @@ def logout():
 def dashboard():
     payments = Payment.query.all()
     form = PaymentForm()
-    
+
+    # Dynamically generate the select fields.
+    form.employee.choices = [(employee.id, employee.name) for employee in Employee.query.all()]
+    form.employer.choices = [(employer.id, employer.name) for employer in Employer.query.all()]
+
     if form.validate_on_submit():
         new_payment = Payment(
             employer_id=form.employer.data, employee_id=form.employee.data,
@@ -93,7 +97,12 @@ def payment_permalink(payment_id):
         flash("No such entry found.", "warning")
         return redirect(url_for("dashboard"))
 
-    form = PaymentForm()    
+    form = PaymentForm()
+
+    # Dynamically generate the select fields.
+    form.employee.choices = [(employee.id, employee.name) for employee in Employee.query.all()]
+    form.employer.choices = [(employer.id, employer.name) for employer in Employer.query.all()]
+
     if form.validate_on_submit():
         payment.employer_id = form.employer.data
         payment.employee_id = form.employee.data

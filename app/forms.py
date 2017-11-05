@@ -14,13 +14,18 @@ class LoginForm(FlaskForm):
 
 
 class PaymentForm(FlaskForm):
-    employer_choices = [(employer.id, employer.name) for employer in Employer.query.all()]
-    employer = SelectField("Employer", choices=employer_choices, coerce=int)
+    # employer_choices = [(employer.id, employer.name) for employer in Employer.query.all()]
+    employer = SelectField("Employer", choices=[], coerce=int)
 
-    employee_choices = [(employee.id, employee.name) for employee in Employee.query.all()]
-    employee = SelectField("Employee", choices=employee_choices, coerce=int)
+    # employee_choices = [(employee.id, employee.name) for employee in Employee.query.all()]
+    employee = SelectField("Employee", choices=[], coerce=int)
 
     payment_date = DateField("Payment Date", validators=[DataRequired()], default=datetime.datetime.today)
     amount = IntegerField("Amount")
 
+    submit = SubmitField("Save")
+
+
+class EmployerForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Save")
