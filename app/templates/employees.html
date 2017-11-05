@@ -12,17 +12,17 @@
     <div class="row">
         {% include "includes/sidebar.html" %}
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1>employees</h1>
+            <h1>Employees</h1>
             {% include "includes/flashed_messages.html" %}
             
-            <h2>List of employees <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#employee">New employee</button></h2>
+            <h2>List of Employees <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#employee">New Employee</button></h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Employee ID</th>
                             <th>Name</th>
-                            <th>Total Amount Paid</th>
+                            <th>Date Employed</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                         <tr>
                             <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.id }}</a></td>
                             <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.name }}</a></td>
-                            <td>{{ employee.total_amount_paid }}</td>
+                            <td>{{ employee.date_employed | time_format }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

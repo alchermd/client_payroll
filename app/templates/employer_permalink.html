@@ -15,7 +15,7 @@
             <h1>{{ employer.name }}</h1>
             {% include "includes/flashed_messages.html" %}
 
-            <h2>Info <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payment">Update</button> <a href="{{ url_for('delete_employer', employer_id=employer.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
+            <h2>Info <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#employer">Update</button> <a href="{{ url_for('delete_employer', employer_id=employer.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -30,6 +30,8 @@
                         <tr>
                             <td><a href="{{ url_for('employer_permalink', employer_id=employer.id) }}">{{ employer.id }}</a></td>
                             <td><a href="{{ url_for('employer_permalink', employer_id=employer.id) }}">{{ employer.name }}</a></td>
+                            <td>{{ employer.date_registered | time_format }}</td>
+                            <td>{{ employer.total_amount_paid }}</td>
                         </tr>
                     </tbody>
                 </table>
