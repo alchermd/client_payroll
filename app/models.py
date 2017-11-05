@@ -20,6 +20,8 @@ class Employer(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
+    total_amount_paid = db.Column(db.Integer, default=0)
+    date_registered = db.Column(db.DateTime, default=datetime.datetime.now())
     payment = db.relationship('Payment',
                               backref=db.backref('employer', lazy=True))
 
