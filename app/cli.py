@@ -15,6 +15,7 @@ def create_super_user():
     while password is None or len(password) < 5:
         password = input("Enter desired password (at least 5 characters): ")
 
+    # Save a hahsed version of the password.
     new_admin = Admin(username=username, password=pbkdf2_sha256.hash(password))
     db.session.add(new_admin)
     db.session.commit()
