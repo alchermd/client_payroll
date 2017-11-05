@@ -139,12 +139,14 @@ def employers():
     employers = Employer.query.all()
     form = EmployerForm()
     if form.validate_on_submit():
-        new_employer = Employer(name=form.name.data)
+        new_employer = Employer(name=form.name.data, total_amount_paid=form.total_amount_paid.data)
         db.session.add(new_employer)
         db.session.commit()
 
         flash("Employer created", "success")
         return redirect(url_for("employers"))
+
+    print(form.errors)
 
     return render_template("employers.html", employers=employers, form=form)
 
@@ -152,13 +154,45 @@ def employers():
 @app.route("/dashboard/employers/<int:employer_id>")
 @login_required
 def employer_permalink(employer_id):
-    pass
+    employer = Employer.query.filter_by(id=employer_id).first()
+
+    if employer is None:
+        flash("Employer not found.", "warning")
+        return redirect(url_for("employers"))
+
+    form = EmployerForm()
+    if form.validate_on_submit():
+        employer.name = form.name.data
+        employer.total_amount_paid = form.total_amount_paid.data
+
+        flash("Employer info updated.", "success")
+        return redirect(url_for("employers"))
+
+    return render_template("employer_permalink.html", employer=employer, form=form)
+
+
+@app.route("/dashboard/employers/<int:employer_id>/delete")
+@login_required
+def delete_employer(employer_id):
+    employer = Employer.query.filter_by(id=employer_id).first()
+
+    if employer is None:
+        flash("Employer not found.", "warning")
+        return redirect(url_for("employers"))
+
+    db.session.delete(employer)
+    db.session.commit()
+
+    flash("Employer deleted.", "danger")
+    return redirect(url_for("employers"))
 
 
 @app.route("/dashboard/employees/")
 @login_required
 def employees():
-    pass
+    employees = Employee.query.all()
+
+    return render_template("employees.html", employees=employees)
 
 
 @app.route("/dashboard/employees/<int:employee_id>")
