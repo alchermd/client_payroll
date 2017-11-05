@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Payment {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+{% include "includes/navbar.html" %}
+<div class="container-fluid">
+    <div class="row">
+        {% include "includes/sidebar.html" %}
+        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+            <h1>{{ employer.name }}</h1>
+            {% include "includes/flashed_messages.html" %}
+
+            <h2>Info <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payment">Update</button> <a href="{{ url_for('delete_employer', employer_id=employer.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Date Registered</th>
+                            <th>Total Amount Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="{{ url_for('employer_permalink', employer_id=employer.id) }}">{{ employer.id }}</a></td>
+                            <td><a href="{{ url_for('employer_permalink', employer_id=employer.id) }}">{{ employer.name }}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% include "includes/employer_modal.html" %}
+{% endblock %}
