@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Payment {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+{% include "includes/navbar.html" %}
+<div class="container-fluid">
+    <div class="row">
+        {% include "includes/sidebar.html" %}
+        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+            <h1>{{ employee.name }}</h1>
+            {% include "includes/flashed_messages.html" %}
+
+            <h2>Info <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#employee">Update</button> <a href="{{ url_for('delete_employee', employee_id=employee.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Date Employed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.id }}</a></td>
+                            <td><a href="{{ url_for('employee_permalink', employee_id=employee.id) }}">{{ employee.name }}</a></td>
+                            <td>{{ employee.date_employed | time_format }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% include "includes/employee_modal.html" %}
+{% endblock %}
