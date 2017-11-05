@@ -23,7 +23,8 @@ class Employer(db.Model):
     total_amount_paid = db.Column(db.Integer, default=0)
     date_registered = db.Column(db.DateTime, default=datetime.datetime.now())
     payment = db.relationship('Payment',
-                              backref=db.backref('employer', lazy=True))
+                              backref=db.backref('employer', lazy=True),
+                              cascade="save-update, merge, delete")
 
     def __str__(self):
         return f"<Employer {self.name} />"
@@ -37,7 +38,8 @@ class Employee(db.Model):
     name = db.Column(db.String(255), unique=True, nullable=False)
     date_employed = db.Column(db.DateTime, default=datetime.datetime.now())
     payment = db.relationship('Payment',
-                              backref=db.backref('employee', lazy=True))
+                              backref=db.backref('employee', lazy=True),
+                              cascade="save-update, merge, delete")
 
     def __str__(self):
         return f"<Employee {self.name} />"
