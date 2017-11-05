@@ -1,5 +1,5 @@
 from . import app, db
-from .forms import LoginForm, UpdatePaymentForm
+from .forms import LoginForm, PaymentForm
 from .models import Admin, Employee, Employer, Payment
 from flask import flash, redirect, render_template, session, url_for
 from functools import wraps
@@ -66,12 +66,22 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/dashboard")
+@app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
     payments = Payment.query.all()
+    form = PaymentForm()
+    if form.validate_on_submit():
+        new_payment = Payment(
+            employer_id=form.employer.data, employee_id=form.employee.data,
+            amount=form.amount.data, payment_date=form.payment_date.data)
+        db.session.add(new_payment)
+        db.session.commit()
 
-    return render_template("dashboard.html", payments=payments)
+        flash("Payment created.", "success")
+        return redirect(url_for("dashboard"))
+
+    return render_template("dashboard.html", payments=payments, form=form)
 
 
 @app.route("/dashboard/payments/<int:payment_id>", methods=["GET", "POST"])
@@ -82,11 +92,12 @@ def payment_permalink(payment_id):
         flash("No such entry found.", "warning")
         return redirect(url_for("dashboard"))
 
-    form = UpdatePaymentForm()    
+    form = PaymentForm()    
     if form.validate_on_submit():
         payment.employer_id = form.employer.data
         payment.employee_id = form.employee.data
         payment.amount = form.amount.data
+        payment.payment_date = form.payment_date.data
 
         db.session.add(payment)
         db.session.commit()
