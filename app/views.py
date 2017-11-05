@@ -151,7 +151,7 @@ def employers():
     return render_template("employers.html", employers=employers, form=form)
 
 
-@app.route("/dashboard/employers/<int:employer_id>")
+@app.route("/dashboard/employers/<int:employer_id>", methods=["GET", "POST"])
 @login_required
 def employer_permalink(employer_id):
     employer = Employer.query.filter_by(id=employer_id).first()
@@ -164,6 +164,9 @@ def employer_permalink(employer_id):
     if form.validate_on_submit():
         employer.name = form.name.data
         employer.total_amount_paid = form.total_amount_paid.data
+
+        db.session.add(employer)
+        db.session.commit()
 
         flash("Employer info updated.", "success")
         return redirect(url_for("employers"))
@@ -203,7 +206,40 @@ def employees():
     return render_template("employees.html", employees=employees, form=form)
 
 
-@app.route("/dashboard/employees/<int:employee_id>")
+@app.route("/dashboard/employees/<int:employee_id>", methods=["GET", "POST"])
 @login_required
 def employee_permalink(employee_id):
-    pass
+    employee = Employee.query.filter_by(id=employee_id).first()
+
+    if employee is None:
+        flash("Employee not found.", "warning")
+        return redirect(url_for("employees"))
+
+    form = EmployeeForm()
+    if form.validate_on_submit():
+        employee.name = form.name.data
+        employee.date_employed = form.date_employed.data
+
+        db.session.add(employee)
+        db.session.commit()
+
+        flash("Employee info updated.", "success")
+        return redirect(url_for("employees"))
+
+    return render_template("employee_permalink.html", employee=employee, form=form)
+
+
+@app.route("/dashboard/employees/<int:employee_id>/delete")
+@login_required
+def delete_employee(employee_id):
+    employee = Employee.query.filter_by(id=employee_id).first()
+
+    if employee is None:
+        flash("Employee not found.", "warning")
+        return redirect(url_for("employees"))
+
+    db.session.delete(employee)
+    db.session.commit()
+
+    flash("Employee deleted.", "danger")
+    return redirect(url_for("employees"))
