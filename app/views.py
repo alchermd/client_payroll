@@ -80,9 +80,12 @@ def dashboard():
         new_payment = Payment(
             employer_id=form.employer.data, employee_id=form.employee.data,
             amount=form.amount.data, payment_date=form.payment_date.data)
-        
+
         employer = Employer.query.filter_by(id=form.employer.data).first()
         employer.total_amount_paid += form.amount.data
+
+        employee = Employee.query.filter_by(id=form.employee.data).first()
+        employee.total_salary += form.amount.data
 
         db.session.add(new_payment)
         db.session.commit()
