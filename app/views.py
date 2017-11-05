@@ -1,5 +1,5 @@
 from . import app, db
-from .forms import LoginForm, PaymentForm
+from .forms import EmployerForm, LoginForm, PaymentForm
 from .models import Admin, Employee, Employer, Payment
 from flask import flash, redirect, render_template, session, url_for
 from functools import wraps
@@ -71,6 +71,7 @@ def logout():
 def dashboard():
     payments = Payment.query.all()
     form = PaymentForm()
+    
     if form.validate_on_submit():
         new_payment = Payment(
             employer_id=form.employer.data, employee_id=form.employee.data,
@@ -123,9 +124,31 @@ def delete_payment(payment_id):
     return redirect(url_for("dashboard"))
 
 
+@app.route("/dashboard/employers/", methods=["GET", "POST"])
+@login_required
+def employers():
+    employers = Employer.query.all()
+    form = EmployerForm()
+    if form.validate_on_submit():
+        new_employer = Employer(name=form.name.data)
+        db.session.add(new_employer)
+        db.session.commit()
+
+        flash("Employer created", "success")
+        return redirect(url_for("employers"))
+
+    return render_template("employers.html", employers=employers, form=form)
+
+
 @app.route("/dashboard/employers/<int:employer_id>")
 @login_required
 def employer_permalink(employer_id):
+    pass
+
+
+@app.route("/dashboard/employees/")
+@login_required
+def employees():
     pass
 
 
