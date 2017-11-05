@@ -64,7 +64,11 @@
                     </div>
                     <div class="form-group">
                         {{ form.amount.label}}
-                        {{ form.amount(class="form-control") }}
+                        {{ form.amount(class="form-control", value=payment.amount) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.payment_date.label}}
+                        {{ form.payment_date(class="form-control") }}
                     </div>
                 </div>
                 <div class="modal-footer">
