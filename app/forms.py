@@ -1,5 +1,4 @@
 import datetime
-from .models import Employee, Employer
 from flask_wtf import FlaskForm
 from wtforms import (IntegerField, PasswordField,
                      SelectField, StringField, SubmitField)
@@ -14,10 +13,7 @@ class LoginForm(FlaskForm):
 
 
 class PaymentForm(FlaskForm):
-    # employer_choices = [(employer.id, employer.name) for employer in Employer.query.all()]
     employer = SelectField("Employer", choices=[], coerce=int)
-
-    # employee_choices = [(employee.id, employee.name) for employee in Employee.query.all()]
     employee = SelectField("Employee", choices=[], coerce=int)
 
     payment_date = DateField("Payment Date", validators=[DataRequired()], default=datetime.datetime.today)
@@ -29,3 +25,4 @@ class PaymentForm(FlaskForm):
 class EmployerForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Save")
+    total_amount_paid = IntegerField("Total Amount Paid", default=0)
