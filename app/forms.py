@@ -26,3 +26,10 @@ class EmployerForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Save")
     total_amount_paid = IntegerField("Total Amount Paid", default=0)
+
+
+class EmployeeForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    date_employed = DateField("Date Employed", validators=[DataRequired()], default=datetime.datetime.today)
+    submit = SubmitField("Save")
+    
