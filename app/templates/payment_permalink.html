@@ -15,7 +15,7 @@
             <h1>Payment #{{ payment.id }}</h1>
             {% include "includes/flashed_messages.html" %}
 
-            <h2>Details <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updatePayment">Update</button> <a href="{{ url_for('delete_payment', payment_id=payment.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
+            <h2>Details <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payment">Update</button> <a href="{{ url_for('delete_payment', payment_id=payment.id) }}" class="btn btn-danger btn-sm">Delete</a></h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -42,41 +42,5 @@
     </div>
 </div>
 
-<div class="modal fade" id="updatePayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Payment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                <div class="modal-body">
-                    <div class="form-group">
-                        {{ form.employer.label}}
-                        {{ form.employer(class="custom-select") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.employee.label}}
-                        {{ form.employee(class="custom-select") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.amount.label}}
-                        {{ form.amount(class="form-control", value=payment.amount) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.payment_date.label}}
-                        {{ form.payment_date(class="form-control") }}
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    {{ form.submit(class="btn btn-primary") }}
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+{% include "includes/payment_modal.html" %}
 {% endblock %}

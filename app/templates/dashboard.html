@@ -35,7 +35,7 @@
                 </div>
             </section>
 
-            <h2>Payments Made <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#newPayment">New Payment</button></h2>
+            <h2>Payments Made <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payment">New Payment</button></h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -64,41 +64,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="newPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                <div class="modal-body">
-                    <div class="form-group">
-                        {{ form.employer.label}}
-                        {{ form.employer(class="custom-select") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.employee.label}}
-                        {{ form.employee(class="custom-select") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.amount.label}}
-                        {{ form.amount(class="form-control", value=0) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.payment_date.label}}
-                        {{ form.payment_date(class="form-control") }}
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    {{ form.submit(class="btn btn-primary") }}
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
+{% with payment = {} %}
+{% include "includes/payment_modal.html" %}
+{% endwith %}
 {% endblock %}
